@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<br>
+    <!--  
+    1.Vue.js란?
+        Javascprit의 프레임워크 이며 발음과 비슷하게 View에 최적화시킨 프레임워크
+        MVVM패턴을 따르고 있습니다.
+
+            MVVM 패턴 : Model - view - viewModel(모델,뷰,뷰모델) 패턴의 약자
+
+                -Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분
+                -View : 사용자에게 보여지는 화면 UI 부분
+                -ViewModel : View를 표현하기 위해 만든 View를 위한 Model,
+                             View를 나태내 주기 위한 Model이자 View를 나타내기위한 데이터를 처리하는 부분.
+
+            MVVM - "MVC에서 컨트롤러가 뷰모델로 교체된 형태" 이고 뷰모델은 UI레이어 아래에 위치
+                    뷰모델은 뷰가 필요로 하든 데이터와 커맨드 객체를 노출해주기때문에 뷰가 필요로하는 데이터와 액션은 
+                    담고있는 컨테이너 객체로 볼 수도 있습니다.
+
+        MVC와의 가장다른점 : 커맨드와 데이터바인딩 
+
+    2.Vue.js의 특징?
+        가장 큰 특징은 컴포넌트를 이용한 개발
+        하나의 템플릿을 컴포넌트 형식을 이용해 만든 후 여러곳에서 사용가능
+            
+
+    3.Vue인스턴스
+    뷰의 모든 시작은 뷰 인스턴스를 만드는 것 부터 시작 
+    
+    자주 사용하는 옵션 
+    뷰 관련옵션 : el , template , components
+    데이터 관련 옵션 : data , computed , methods
+
+    el : HTML의 엘레먼트 아이디나 클래스를 지정
+         id나 class를 지정한 태그만 Vue 인스턴스의 대상이됨
+         주의점 : class를 지정한 경우에도 인스턴스는 하나의 클래스만 대상이됨 나머지 클래스 엘레먼트는 대상이 되지않음
+        // js
+        new Vue({
+            el:"#test"
+        })
+        //html 
+        <div id="test"></div>
+
+    template : 사용법이 두가지
+             - 직접 template:"<h1>Hello world</h1>"를 이용해 사용하거나,
+             컴포넌트를 이용하여 사용하는 방법
+             //js 
+             new Vue({
+                 el:"#test",
+                 template:"<p>hello world</p>"
+             })
+
+             //html
+             <div id="test">
+             </div>    
+             
+    -->
+
+    <h3>template</h3>
+    <div id="test"></div></br>
+
+
+    <!-- data : 뷰 인스턴스 안의 변수를 관리합니다
+                사용법은 {{}} 중괄호 안에 변수를 넣어 사용
+
+                // js
+                new Vue({
+                    el:"test",
+                    data:{
+                    "stringData":"hello world",
+                    },
+                })
+
+                // html
+                <div id="test">{{ stringData }}</div>
+    -->
+    <h3>data</h3>
+    <div id="test2">{{stringData}}</div><br></br>
+
+    <!-- compute , methods : 단순히 data 안에 변수를 넣어 사용해도 되지만,
+                             좀 더 유동적으로 사용하고 싶을때
+        
+
+                            사용방법으론 data의 변수를 사용하는 방법과 비슷
+                            methods와 compute는 거의비슷하지만 다른점을본다면
+                            methods는 캐쉬가되지만 ,compute는 캐쉬가 되지않음
+         //js
+         new Vue({
+             el:"test",
+             data{
+                 stringData:"good day"
+             },
+             computed : {
+                 computedData:function(){
+                     return this.data.split('').reverse().join('')
+                 }
+             },
+             methods:{
+                 methodData:function(){
+                     return this.data.split("").reverse().join("")
+                 }
+             }
+         })                    
+            //html
+            <div id="test">
+            {{data}}
+            {{computedData}}
+            {{methodData()}}
+            </div>    
+     -->
+    <h3>compute , methods</h3>
+    <div id="test3">
+        {{ stringData }}<br/>
+        {{ computedData }}<br/>
+        {{ methodData() }}
+    </div>
+
+</body>
+
+<script>
+
+    new Vue({
+        el:"#test",
+        template:"<p>hello world</p>"
+    })
+
+    new Vue({
+        el:"#test2",
+        data:{
+        "stringData":"hello world",
+        },
+    })
+
+    new Vue({
+        el:"#test3",
+        data:{
+        stringData:"good day"
+        },
+        computed:{
+            computedData:function(){
+                return this.stringData.split('').reverse().join('')
+            }
+        },
+        methods:{
+            methodData:function(){
+                return this.stringData.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+</html>
