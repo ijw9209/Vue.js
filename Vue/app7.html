@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+    <!--
+        //todo-item 이름을 가진 컴포넌트를 정의
+        Vue.component('todo-item',{
+            template: '<li>할 일 항목 하나입니다.</li>'
+        })
+
+        var app = new Vue(...)
+
+        이제 다른 컴포넌트의 템플릿에서 이 컴포넌트를 추가할수있음
+        <ol>
+            //todo-item 컴포넌트의 인스턴스 만들기 
+            <todo-item></todo-item>
+        </ol>    
+
+        위의것은 똑같은 텍스트를 렌더링할뿐 무언가가 부족 ,
+        부모영역의 데이터를 자식에 전달할 수 있어야함
+        prop를 전달할수 있도록 todo-item컴포넌트의 정의를 수정
+        
+        Vue.component('todo-item',{
+            // 이제 todo-item 컴포넌트는 "prop" 라고 하는 
+            // 사용자 정의 속성 같은 것을 입력받을 수 있음
+            // 이 prop는 todo라는 이름으로 정의
+            props:['todo'],
+            template:'<li>{{todo.text}}'</li>
+        })
+    -->
+
+    <div id="app-7">
+        <ol>
+            <!--
+                이제 각 todo-item에 todo객체를 제공
+                화면에 나오므로 , 각항목의 컨텐츠는 동적으로 바뀜
+                또한 각 구성요소에 "키"를 제공해야함
+            -->
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+            ></todo-item>
+        </ol>
+    </div>
+</body>
+<script>
+
+    Vue.component('todo-item',{
+        props:['todo'],
+        template:'<li>{{todo.text}}</li>'
+    })
+
+    var app7 = new Vue({
+        el:'#app-7',
+        data:{
+            groceryList:[
+                { id: 0 , text:'Vegetables'},
+                { id: 1 , text:'Cheese'},
+                { id: 2 , text:'Whatever else humans are supposed to eat'}
+            ]
+        }
+    })
+
+</script>
+</html>
