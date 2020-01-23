@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+    <!-- 컴포넌트 : html , css , js를 부품으로 사용할수 있음
+                   컴포넌트에 이름을 부여하고 언제든지 재사용 가능한 뷰 인스턴스
+
+                   -컴포넌트는 간단히 글로벌과 로컬로 나뉘어서 사용할수있다.
+                   -컴포넌트는 data를 함수로써 사용
+                   -컴포넌트에만 사용가능한 특징 prop이 있다.
+
+
+         1.글로벌 컴포넌트 : 모든 뷰 인스턴스가 사용할수 있는 컴포넌트
+                          주의점) 반드시 사용할 뷰 인스턴스를 만들기전에 작성
+    -->
+    <div id="test">
+        <test-component></test-component>
+    </div>
+<script>
+    Vue.component("test-component",{
+        //option
+        template:"<p>test component!!</p>"
+    })
+
+    new Vue({
+        el:"#test"
+    })
+
+
+</script>
+
+    <!-- 2.로컬 컴포넌트 : 변수로써 한번 정의해놓고 필요한 
+                          인스턴스에만 가져다 사용할수 있음
+
+    -->
+
+    <div id="test2">
+        <local-component></local-component>
+    </div>
+<script>
+
+    var localComponent = {
+        template:"<p>local component!!</p>"
+    }
+
+    new Vue({
+        el:"#test2",
+        components:{
+            "local-component":localComponent
+        }
+    })
+
+    //위의 결과를 보면 알 수 있듯이 컴포넌트를 정의하고 사용할때는 components를 이용하여 사용
+
+
+</script>
+
+
+    <!-- data 사용법 : 컴포넌트에서 data를 사용할 경우 반드시 함수로써 사용
+        
+
+        나쁜예: 콘솔창을보면 에러가 나옴
+        The "data" option should be a function that returns a per-instance value in component definitions.
+
+        Vue.component('test-component', {
+            data: {
+             message: 'testComponent!!!'
+                 }
+            })
+
+
+        좋은예 : 이러한 방식처럼 함수를 이용하여 사용해야함
+
+        Vue.component('test-component', {
+            data:function() {
+            return {
+                count:0
+                }
+            }
+        })    
+    -->
+    
+    <!-- Props : 모든 컴포넌트 인스턴스는 하위 컴포넌트 템플릿에서
+                 상위 데이터를 직접 참조 할수없다.
+                하지만 pros옵션을 사용하여 하위 컴포넌트로 데이터를 전달 할수 있음
+            
+            !! 여기서 중요한점은 명시적으로 먼저 사용할 props를 선언해야함
+            -->
+
+    <div id="test3">
+        <test2-component data="props data!!"></test2-component>
+    </div>                
+
+<script>
+    Vue.component('test2-component',{
+        props:['data'],
+        template:'<span>{{data}}</span>'
+    })
+
+    new Vue({
+        el:"#test3"
+    })
+
+</script>    
+</body>
+</html>
