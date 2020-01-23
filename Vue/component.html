@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+
+    <!-- 컴포넌트란 Vue의 가장강력한 기능중 하나. 기본 html엘리먼트를
+         확장하여 재사용 가능한 코드를 캡슐화하는데 도움이된다.
+         상위 수준에서 컴포넌트는 Vue의 컴파일러에 의해 동작이 추가된 
+         사용자 지정 엘리먼트.
+         경우에따라 특별한 is 속성으로 확장된 원시 html 엘리먼트로 나타낼수잇음
+        
+         Vue 컴포넌트는 Vue인스턴스 이기도함 그러므로 모든 옵션 객체를 사용할수있다.
+         (루트에만 사용하는 옵션은 제외) 그리고 같은 라이프사이클 훅을 사용할수 있다.
+        
+         컴포넌트 사용하기
+         #전역등록 : 전역컴포넌트를 등록하려면, Vue.component(tagName , options) 를 사용
+    -->
+
+    <div id="example">
+        <my-component></my-component>
+    </div>
+
+<script>
+        //등록
+    Vue.component('my-component',{
+        template:'<div>사용자 정의 컴포넌트 입니다!</div>'
+    })
+
+    //루트 인스턴스 생성
+
+    new Vue({
+        el:"#example"
+    })
+
+</script>
+
+    <!-- #지역 등록 : 모든 컴포넌트를 전역으로 등록할 필요는 없다.
+                      components 인스턴스 옵션으로 등록함으로써 
+                      다른 인스턴스/컴포넌트의 범위에서만 사용할수 있는 컴포넌트를 만들수 있다.
+                      -->
+
+    <div id="example2">
+        <my2-component></my2-component>
+    </div>
+
+<script>
+
+    var Child = {
+        template:'<div>사용자 정의 컴포넌트 입니다!!</div>'
+    }
+
+    new Vue({
+        el:"#example2",
+        components:{
+            //<my-component>는 상위 템플릿에서만 사용할 수 있습니다.
+            'my2-component':Child
+        }
+    })
+
+</script>             
+
+    <!-- #data는 반드시 함수여야함 (컴포넌트에서)
+         다음과 같이 사용
+        -->
+        <hr>
+    <div id="example3">
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+    </div>
+
+<script>
+    var data = {counter : 0}
+
+    Vue.component("simple-counter",{
+        template:'<button v-on:click="counter += 1">{{ counter }}</button>',
+        // 데이터는 기술적으로 함수이므로 Vue는 따지지 않지만
+        // 각 컴포넌트 인스턴스에 대해 같은 객체 참조를 반환함.
+        data:function(){
+            return {
+                counter : 0
+            }
+        }
+    })
+
+    new Vue({
+        el:"#example3"
+    })
+
+</script>    
+
+    <!-- Props
+        #Props로 데이터 전달하기
+        모든 컴포넌트 인스턴스에는 자체 격리된 범위가 있다.
+        즉, 하위컴포넌트의 템플릿에서 상위데이터를 직접 참조 할 수 없으며
+        그렇게 해서는 안됨 . 데이터는 props 옵션을 사용하여 하위컴포넌트로 전달될수있다.
+
+        prop는 상위 컴포넌트의 정보를 전달하기위한 사용자 지정 특성,
+        하위 컴포넌트는 props옵션을 사용하여 수신할것으로 기대되는 props를 명시적으로 선언해야함
+
+    -->
+
+    <hr>
+    
+    
+    <child message="안녕하세요!"></child>
+<script>
+
+        Vue.component('child', {
+            // props 정의
+            props: ['message'],
+            // 데이터와 마찬가지로 prop은 템플릿 내부에서 사용할 수 있으며
+            // vm의 this.message로 사용할 수 있습니다.
+            template: '<span>{{ message }}</span>'
+            })
+
+
+        new Vue({
+            el:"child"
+        })            
+</script>    
+</body>
+</html>
